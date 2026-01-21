@@ -1,0 +1,127 @@
+
+(function(){
+  const path = (window.location.pathname || '').replace(/\\/g,'/');
+  const inBlog = path.includes('/blog/');
+  const BASE = inBlog ? '../' : '';
+
+  const HEADER_URL = BASE + 'header.html';
+  const FOOTER_URL = BASE + 'footer.html';
+
+  const HEADER_FALLBACK = `<header class="siteHeader">
+  <div class="container headerRow">
+    <div class="brand">
+      <a href="index.html" class="brandLink">
+        <div class="logoBox"></div>
+        <div>
+          <div class="brandName">Healthy Water &amp; Air</div>
+          <div class="brandTag">Better water and cleaner air</div>
+        </div>
+      </a>
+    </div>
+
+    <nav>
+      <ul>
+        <li><a href="index.html" data-nav="index">Home</a></li>
+        <li><a href="index.html#water" data-nav="water">Water</a></li>
+        <li><a href="index.html#air" data-nav="air">Air</a></li>
+        <li><a href="blog/index.html" data-nav="blog">Blog</a></li>
+        <li><a href="cart.html" data-nav="cart">Cart (<span data-cart-count>0</span>)</a></li>
+        <li><a href="schedule.html" data-nav="schedule">Schedule</a></li>
+      </ul>
+    </nav>
+
+    <div class="actions">
+      <a class="btn primary" href="start.html">Start Self Check</a>
+    </div>
+  </div>
+</header>
+`;
+  const FOOTER_FALLBACK = `<footer class="footer">
+  <div class="container footerGrid">
+    <div>
+      <div style="display:flex; align-items:center; gap:12px;">
+        <div class="logo" aria-hidden="true">HWA</div>
+        <div>
+          <div style="font-weight:900; color:var(--text);">Healthy Water &amp; Air</div>
+          <div class="tiny">Clean water and clean air for Utah homes</div>
+        </div>
+      </div>
+
+      <div class="tiny" style="margin-top:12px; line-height:1.7;">
+        Phone: <a href="tel:18016091551">801-609-1551</a><br/>
+        Service area: Utah homes
+      </div>
+
+      <div style="margin-top:12px;">
+        <div style="font-weight:900; margin-bottom:6px;">We service</div>
+        <div class="tiny">
+          Salt Lake County - Utah County - Davis County - Weber County - Summit County - Tooele County - Wasatch County - Sevier County
+        </div>
+      </div>
+
+      <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap;">
+        <a class="btn primary" href="start.html">Start Self Check</a>
+        <a class="btn secondary" href="schedule.html">Schedule</a>
+      </div>
+    </div>
+
+    <div>
+      <h4>Quick Links</h4>
+      <a href="start.html">Self Check</a>
+      <a href="index.html#water">Water quality</a>
+      <a href="index.html#air">Air quality</a>
+      <a href="blog/index.html">Blog</a>
+      <a href="cart.html">Cart</a>
+    </div>
+
+    <div>
+      <h4>Latest posts</h4>
+      <div data-footer-posts class="miniPosts"></div>
+    </div>
+  </div>
+
+  <div class="container" style="margin-top:18px;">
+    <div class="tiny">© <span id="year"></span> Healthy Water &amp; Air. All rights reserved.</div>
+  </div>
+</footer>
+`;
+
+  function setHTML(selector, html) {
+    const el = document.querySelector(selector);
+    if (!el) return;
+    el.innerHTML = html.replaceAll('{BASE}', BASE);
+  }
+
+  function fetchText(url) {
+    return fetch(url, {cache:'no-store'}).then(r=>{ if(!r.ok) throw new Error('bad'); return r.text(); });
+  }
+
+  function loadWithFallback(selector, url, fallback) {
+    return fetchText(url).then(t=>{ setHTML(selector, t); return true; })
+      .catch(()=>{ setHTML(selector, fallback); return false; });
+  }
+
+  Promise.all([
+    loadWithFallback('#header-placeholder', HEADER_URL, HEADER_FALLBACK),
+    loadWithFallback('#footer-placeholder', FOOTER_URL, FOOTER_FALLBACK),
+  ]).then(()=>{
+    // year
+    const y=document.getElementById('year');
+    if (y) y.textContent = new Date().getFullYear();
+
+    // cart count
+    if (window.HWA_CART && window.HWA_CART.updateCount) window.HWA_CART.updateCount();
+
+    // footer posts (may be defined by app.js; retry a few times)
+    let tries=0;
+    const tick=()=>{
+      tries++;
+      if (window.HWA_RENDER_FOOTER_POSTS) {
+        window.HWA_RENDER_FOOTER_POSTS();
+      } else if (tries < 10) {
+        setTimeout(tick, 80);
+      }
+    };
+    tick();
+  });
+})();
