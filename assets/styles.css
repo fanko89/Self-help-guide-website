@@ -44,6 +44,7 @@ hr{border:none; border-top:1px solid var(--stroke); margin:22px 0}
   backdrop-filter: blur(10px);
   background: rgba(11,18,32,.62);
   border-bottom:1px solid var(--stroke);
+  padding: 0 16px;
 }
 .nav{
   display:flex; align-items:center; justify-content:space-between;
@@ -54,10 +55,19 @@ hr{border:none; border-top:1px solid var(--stroke); margin:22px 0}
   font-weight:900; letter-spacing:.2px;
 }
 .brand-badge{
-  width:34px; height:34px; border-radius:10px;
-  background: linear-gradient(135deg, var(--primary), var(--primary-2));
-  box-shadow: 0 8px 18px rgba(71,199,255,.15);
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
 }
+
+.brand-logo{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  display:block;
+}
+
 .nav-links{display:flex; gap:14px; align-items:center}
 .nav-links a{
   text-decoration:none; font-weight:700; font-size:14px;
@@ -394,7 +404,6 @@ body{
 .input{
   width: min(520px, 100%);
   padding: 10px 12px;
-  margin:8px;
   border-radius: 12px;
   border: 1px solid rgba(255,255,255,.10);
   background: rgba(255,255,255,.05);
