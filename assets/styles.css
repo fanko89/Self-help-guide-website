@@ -600,6 +600,11 @@ body{ font-size: var(--body); line-height: 1.65; }
   box-shadow: 0 18px 55px rgba(0,0,0,.33);
 }
 
+.section-block .lead {
+  max-width: 1200px;
+}
+
+
 .split{
   display: grid;
   grid-template-columns: 1.08fr .92fr;
