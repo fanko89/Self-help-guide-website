@@ -12,19 +12,7 @@
         blocks:[
           {type:"callout", title:"How this works", body:"This guide narrows from symptoms → likely causes → best-fit products. You can skip anything you don’t know."},
           {type:"video", title:"Why water + air quality matter", caption:"Replace VIDEO_ID with your intro video.", embedUrl:"https://www.youtube.com/embed/VIDEO_ID"},
-          {type:"accordion", items:[
-            {q:"How long does this take?", a:"Most homeowners finish in 5-10 minutes. If you add details (humidity, staining, system age) it may take longer."},
-            {q:"Is the price final?", a:"It’s an estimate. Final pricing depends on home layout, access, code requirements, and exact sizing."},
-            {q:"Do I need to do everything?", a:"No. The guide recommends the smallest bundle that fits your goals and risk level."}
-          ]}
-        ],
-        questions:[
-          {key:"primary_focus", type:"multi", title:"What do you want to improve first?", help:"Choose all that apply.", options:[
-            {value:"water", label:"Water quality (taste, hardness, safety)", meta:"Drinking + whole-home"},
-            {value:"air", label:"Indoor air quality (dust, allergies, odors)", meta:"Filtration + purification"},
-            {value:"comfort", label:"HVAC comfort (hot/cold rooms, airflow, dryness)", meta:"Humidity, leaks, airflow"},
-            {value:"maintenance", label:"Lower maintenance / protect equipment", meta:"Scale, filters, coils"}
-          ]},
+          {type:"text", html:"<div><div class='tile' style='margin-top:10px;'><strong>How long does this take?</strong><p>Most homeowners finish in 5-10 minutes. If you add details (humidity, staining, system age) it may take longer.</p></div><div class='tile' style='margin-top:10px;'><strong>Is the price final?</strong><p>It’s an estimate. Final pricing depends on home layout, access, code requirements, and exact sizing.</p></div><div class='tile' style='margin-top:10px;'><strong>Do I need to do everything?</strong><p>No. The guide recommends the smallest bundle that fits your goals and risk level.</p></div></div>"},
           {key:"home_type", type:"single", title:"What best describes your home?", options:[
             {value:"house", label:"Single-family home"},
             {value:"townhome", label:"Townhome / condo"},
@@ -86,23 +74,10 @@
         lead:"These details help us size and select the right system.",
         blocks:[
 {type:"video", title:"Choosing whole-home vs drinking water solutions", caption:"Explain when a softener/whole-home filter matters vs when RO alone is enough.", embedUrl:"https://www.youtube.com/embed/VIDEO_ID"},
-{type:"accordion", items:[
-  {q:"If I only fix one thing, what should it be?", a:"If hardness/scale is damaging fixtures and appliances, softening is often the biggest overall protection step. If taste is the main issue, drinking water solutions may be the best first move."},
-  {q:"Will filters reduce water pressure?", a:"Properly sized systems should maintain good flow. Undersized housings or clogged filters can reduce pressure - we match the system to your home and usage."}
-]},
+{type:"text", html:"<div><div class='tile' style='margin-top:10px;'><strong>If I only fix one thing, what should it be?</strong><p>If hardness/scale is damaging fixtures and appliances, softening is often the biggest overall protection step. If taste is the main issue, drinking water solutions may be the best first move.</p></div><div class='tile' style='margin-top:10px;'><strong>Will filters reduce water pressure?</strong><p>Properly sized systems should maintain good flow. Undersized housings or clogged filters can reduce pressure - we match the system to your home and usage.</p></div></div>"},
 
           {type:"callout", title:"Sizing matters", body:"Softener size is based on hardness and household usage. RO and carbon depend on goals and contaminants."},
-          {type:"accordion", items:[
-            {q:"What if I don’t know hardness?", a:"That’s fine - the guide will keep the recommendation at a safe baseline and mark sizing as confirm-in-home."},
-            {q:"What’s the difference between carbon and RO?", a:"Carbon improves taste/odor and some chemicals for the whole home. RO is a drinking-water system that removes a wider range of dissolved contaminants."}
-          ]}
-        ],
-        questions:[
-          {key:"water_people", type:"single", title:"How many people live in the home?", options:[
-            {value:"1-2", label:"1-2"},
-            {value:"3-4", label:"3-4"},
-            {value:"5+", label:"5+"}
-          ]},
+          {type:"text", html:"<div><div class='tile' style='margin-top:10px;'><strong>What if I don’t know hardness?</strong><p>That’s fine - the guide will keep the recommendation at a safe baseline and mark sizing as confirm-in-home.</p></div><div class='tile' style='margin-top:10px;'><strong>What’s the difference between carbon and RO?</strong><p>Carbon improves taste/odor and some chemicals for the whole home. RO is a drinking-water system that removes a wider range of dissolved contaminants.</p></div></div>"},
           {key:"water_hardness_known", type:"single", title:"Do you know your water hardness (grains per gallon)?", options:[
             {value:"no", label:"No / not sure"},
             {value:"low", label:"0-5 (low)"},
@@ -126,20 +101,7 @@
         lead:"We’ll identify what’s driving dust, allergies, odors, or dryness.",
         blocks:[
           {type:"video", title:"Dust, allergies, and filters - what actually helps", caption:"Replace VIDEO_ID.", embedUrl:"https://www.youtube.com/embed/VIDEO_ID"},
-          {type:"accordion", items:[
-            {q:"Will a better filter fix allergies?", a:"Sometimes. The biggest win is sealing bypass air and using a deeper media cabinet so airflow stays healthy."},
-            {q:"Do UV lights help?", a:"They can help for coil bio-growth and microbial control, but the best combo depends on humidity and system conditions."}
-          ]}
-        ],
-        questions:[
-          {key:"air_issues", type:"multi", title:"What do you want to improve?", options:[
-            {value:"dust", label:"Less dust", meta:"Cleaner surfaces + less buildup"},
-            {value:"allergies", label:"Allergies/asthma symptoms", meta:"Better filtration and control"},
-            {value:"odors", label:"Odors (cooking, pets, stale air)", meta:"Ventilation + purification"},
-            {value:"pets", label:"Pets in the home", meta:"Hair/dander load"},
-            {value:"dry", label:"Dry air / static shocks", meta:"Humidity control"},
-            {value:"humidity", label:"Too humid / musty", meta:"Dehumidification/ventilation"}
-          ]},
+          {type:"text", html:"<div><div class='tile' style='margin-top:10px;'><strong>Will a better filter fix allergies?</strong><p>Sometimes. The biggest win is sealing bypass air and using a deeper media cabinet so airflow stays healthy.</p></div><div class='tile' style='margin-top:10px;'><strong>Do UV lights help?</strong><p>They can help for coil bio-growth and microbial control, but the best combo depends on humidity and system conditions.</p></div></div>"},
           {key:"air_filter_now", type:"single", title:"Current filter style", options:[
             {value:"1in", label:"1-inch thin filter"},
             {value:"4in", label:"4-inch media filter"},
@@ -195,20 +157,7 @@
         lead:"Comfort issues often signal airflow, duct, or humidity problems - and they impact air quality too.",
         blocks:[
           {type:"video", title:"Airflow basics: why rooms run hot or cold", caption:"Replace VIDEO_ID.", embedUrl:"https://www.youtube.com/embed/VIDEO_ID"},
-          {type:"accordion", items:[
-            {q:"Is this a replacement quote?", a:"This guide can flag when replacement may be near, but it’s not a full load calculation. For equipment quotes, schedule an in-home assessment."},
-            {q:"Can I fix comfort without replacing the system?", a:"Often yes. Return leaks, balancing, and filtration cabinet upgrades can reduce hotspots and keep airflow healthy."}
-          ]}
-        ],
-        questions:[
-          {key:"comfort_symptoms", type:"multi", title:"Which comfort issues do you have?", options:[
-            {value:"hotcold", label:"Hot/cold rooms"},
-            {value:"weak", label:"Weak airflow"},
-            {value:"dusty", label:"Dusty when system runs"},
-            {value:"stuffy", label:"Stuffy/stale air"},
-            {value:"noise", label:"Noisy ducts/returns"},
-            {value:"none", label:"No major comfort issues"}
-          ]},
+          {type:"text", html:"<div><div class='tile' style='margin-top:10px;'><strong>Is this a replacement quote?</strong><p>This guide can flag when replacement may be near, but it’s not a full load calculation. For equipment quotes, schedule an in-home assessment.</p></div><div class='tile' style='margin-top:10px;'><strong>Can I fix comfort without replacing the system?</strong><p>Often yes. Return leaks, balancing, and filtration cabinet upgrades can reduce hotspots and keep airflow healthy.</p></div></div>"},
           {key:"system_age", type:"single", title:"Approximate system age", options:[
             {value:"0-5", label:"0-5 years"},
             {value:"6-10", label:"6-10 years"},
@@ -230,21 +179,7 @@
 {type:"video", title:"How to read your final plan", caption:"Replace VIDEO_ID with a short recap video.", embedUrl:"https://www.youtube.com/embed/VIDEO_ID"},
 
           {type:"callout", title:"Next step options", body:"If you want the most accurate plan, schedule an in-home visit. If you’re ready, add the recommended bundle to your cart and we’ll follow up."},
-          {type:"accordion", items:[
-            {q:"What if I want a smaller bundle?", a:"Reset and answer with lower sensitivity/priority, or remove items from your cart after adding."},
-            {q:"What if I want the strongest protection?", a:"Choose stronger sensitivities (allergies, smoke), and mark health concerns or odors. The guide will build a higher tier."}
-          ]}
-        ],
-        questions:[
-          {key:"notes", type:"textarea", title:"Optional: notes for your technician", help:"Anything unusual about your home? (tight crawlspace, older plumbing, basement moisture, remodel plans)"}
-        ]
-      }
-    ],
-
-    // Rules: map answers -> tags/products
-    rules: [
-      // Always recommend baseline test if water is in focus
-      { when:{any:[{q:"primary_focus", has:"water"},{q:"water_symptoms", truthy:true}]}, addProducts:["water_test"], addNotes:["Baseline water test helps confirm hardness, chlorine, and treatment priorities."] },
+          {type:"text", html:"<div><div class='tile' style='margin-top:10px;'><strong>What if I want a smaller bundle?</strong><p>Reset and answer with lower sensitivity/priority, or remove items from your cart after adding.</p></div><div class='tile' style='margin-top:10px;'><strong>What if I want the strongest protection?</strong><p>Choose stronger sensitivities (allergies, smoke), and mark health concerns or odors. The guide will build a higher tier.</p></div></div>"}, addProducts:["water_test"], addNotes:["Baseline water test helps confirm hardness, chlorine, and treatment priorities."] },
 
       // Water symptoms mapping
       { when:{any:[{q:"water_symptoms", has:"hard"},{q:"water_symptoms", has:"stains"},{q:"water_symptoms", has:"skin"}]}, addProducts:["water_softener"], addNotes:["Hardness/scale issues typically improve most with a correctly sized water softener."], addExplainers:[{title:"Hardness and scale", body:"Hard water leaves mineral deposits that damage fixtures and reduce water heater efficiency. A softener protects plumbing and improves soap performance."}] },

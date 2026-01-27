@@ -480,6 +480,24 @@
         </div>
       `;
 
+      // Only show the recommended bundle at the end of the guide (review step)
+      const showBundle = !!step?.isReview;
+
+      const bundleCardHtml = showBundle ? `
+        <div class="card pad">
+          <div class="h3">Your recommended bundle</div>
+          <div class="tiny">Shown at the end so you can focus on learning first.</div>
+          <div style="margin-top:12px;">${quoteLinesHtml}</div>
+          <hr/>
+          <div class="line">
+            <div style="font-weight:900;">Estimated total</div>
+            <div class="price">${money(total)}</div>
+          </div>
+          <div class="tiny" style="margin-top:8px;">Some items may require an in-home assessment. Use Schedule if you want a technician to confirm sizing and install details.</div>
+          ${notesHtml}
+        </div>
+      ` : '';
+
       mountEl.innerHTML = `
         <div class="wizard">
           <div>
@@ -505,20 +523,8 @@
           </div>
 
           <aside class="quote">
-            <div class="card pad">
-              <div class="h3">Your recommended bundle</div>
-              <div class="tiny">Updates live as you answer.</div>
-              <div style="margin-top:12px;">${quoteLinesHtml}</div>
-              <hr/>
-              <div class="line">
-                <div style="font-weight:900;">Estimated total</div>
-                <div class="price">${money(total)}</div>
-              </div>
-              ${step?.isReview ? `<div class="tiny" style="margin-top:8px;">Some items may require an in-home assessment. Use Schedule if you want a technician to confirm sizing and install details.</div>`:''}
-              ${notesHtml}
-            </div>
-
-            <div style="height:14px;"></div>
+            ${showBundle ? bundleCardHtml : ''}
+            ${showBundle ? '<div style="height:14px;"></div>' : ''}
 
             <div class="card pad">
               <div class="h3">Learn as you go</div>
