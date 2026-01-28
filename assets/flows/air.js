@@ -1,218 +1,228 @@
-(function(){
+﻿(function(){
   const Flow = {
     id: "air",
     badge: "Air guide",
-    subtitle: "Dust, allergies, odors, humidity, ventilation",
+    subtitle: "Dust, allergies, odors, humidity",
     title: "Air Quality Guide",
     steps: [
       {
         id: "a_intro",
-        title: "Indoor air quality plan builder",
-        lead: "This guide builds a layered plan: capture particles, reduce bypass, manage humidity, and add purification if needed.",
+        title: "Indoor air basics",
+        lead: "Education first. Your answers refine emphasis without changing the learning path.",
         blocks: [
-          { type: "callout", title: "Most common failure", body: "Bypass air around the filter. Fixing the cabinet and sealing leaks often beats buying the best 1-inch filter." },
-          { type: "video", title: "Air quality basics (simple)", caption: "Replace VIDEO_ID.", embedUrl: "https://www.youtube.com/embed/VIDEO_ID" },
-          { type: "text", html: "<div><div class='tile' style='margin-top:10px;'><strong>Will this restrict airflow?</strong><p>The guide prefers solutions that protect airflow (deep media filters) rather than restrictive 1-inch upgrades.</p></div><div class='tile' style='margin-top:10px;'><strong>Do I need purification?</strong><p>Not always. Start with filtration and sealing. Add purification when symptoms, odors, smoke, or microbial concerns justify it.</p></div></div>" }
-        ],
-        questions: [
           {
-            key: "a_goal",
-            type: "multi",
-            title: "What are you trying to improve?",
-            help: "Pick all that apply. This drives what we recommend.",
-            options: [
-              { value: "dust", label: "Less dust" },
-              { value: "allergies", label: "Allergies/asthma" },
-              { value: "pets", label: "Pet dander" },
-              { value: "odors", label: "Odors" },
-              { value: "smoke", label: "Smoke/wildfire season" },
-              { value: "dry", label: "Winter dryness" },
-              { value: "humid", label: "Musty/summer humidity" },
-              { value: "fresh_air", label: "Fresher air (ventilation)" }
-            ]
+            type: "explain",
+            title: "Plain-language explanation",
+            body: "Indoor air issues usually come from particles (dust/pets), gases/odors (VOC, smoke), and moisture/ventilation. Filtration helps particles, ventilation helps gases, and humidity control helps comfort."
           },
           {
-            key: "a_filter",
-            type: "single",
-            title: "Current filter style",
-            options: [
-              { value: "1in", label: "1-inch thin filter" },
-              { value: "4in", label: "4-inch media filter" },
-              { value: "unknown", label: "Not sure" }
-            ]
+            type: "videoModule",
+            title: "Video: Indoor air basics",
+            caption: "One concept only: particles vs gases vs humidity.",
+            thumb: "assets/img/thumb-air.png",
+            href: "#"
           },
           {
-            key: "a_sensitivity",
-            type: "single",
-            title: "Sensitivity level",
-            help: "Higher sensitivity pushes stronger filtration/purification.",
-            options: [
-              { value: "standard", label: "Standard" },
-              { value: "high", label: "High (allergies/asthma)" },
-              { value: "very_high", label: "Very high (immune concerns)" }
-            ]
-          }
-        ]
-      },
-
-      {
-        id: "a_particles",
-        title: "Step 1: Particles - dust, dander, and filtration",
-        lead: "Particles are the easiest win when you fix the filter system correctly.",
-        blocks: [
-          { type: "video", title: "Deep media vs 1-inch filter", caption: "Replace VIDEO_ID.", embedUrl: "https://www.youtube.com/embed/VIDEO_ID" },
+            type: "chart",
+            title: "Visual / chart placeholder",
+            body: "Simple diagram of air quality layers and what each solves.",
+            chartTitle: "IAQ layers overview",
+            rows: [
+              { label: "Filtration", value: 70 },
+              { label: "Ventilation", value: 55, showIf: { any: [{ q: "a_symptoms", has: "odors" }] } },
+              { label: "Humidity control", value: 45, showIf: { any: [{ q: "a_symptoms", has: "dry" }] } }
+            ],
+            caption: "What this shows: different problems need different layers."
+          },
           {
-            type: "checklist",
-            title: "What improves particle capture most",
+            type: "evidenceAccordion",
+            title: "Evidence & Sources",
+            summary: "Open sources (EPA, CDC, university)",
             items: [
-              "Upgrade to a 4-inch media cabinet (more surface area, better airflow).",
-              "Seal bypass gaps so air must pass through the filter.",
-              "Replace filters on schedule (do not wait until fully clogged)."
-            ]
-          }
-        ],
-        questions: [
-          { key: "a_dust_level", type: "slider", title: "Dust level in the home", help: "0 = low, 10 = heavy dust buildup.", min: 0, max: 10, step: 1, suffix: "/10" },
-          {
-            key: "a_pets_count",
-            type: "single",
-            title: "How many indoor pets?",
-            showIf: { any: [{ q: "a_goal", has: "pets" }] },
-            options: [
-              { value: "1", label: "1" },
-              { value: "2", label: "2" },
-              { value: "3+", label: "3+" }
-            ]
-          }
-        ]
-      },
-
-      {
-        id: "a_bypass",
-        title: "Step 2: Bypass air and return leaks",
-        lead: "If air slips around the filter, the system can circulate dust even with a premium filter.",
-        blocks: [
-          { type: "callout", title: "Common signs", body: "Dusty returns, whistling, filter not fitting snug, visible gaps, attic/crawlspace smell when running." },
-          { type: "video", title: "Bypass air explained", caption: "Replace VIDEO_ID.", embedUrl: "https://www.youtube.com/embed/VIDEO_ID" }
-        ],
-        questions: [
-          {
-            key: "a_bypass_signs",
-            type: "multi",
-            title: "Do any of these apply?",
-            options: [
-              { value: "gaps", label: "Filter has gaps or loose fit" },
-              { value: "dusty_returns", label: "Returns are dusty / black streaking" },
-              { value: "attic_smell", label: "Attic/crawlspace smell when running" },
-              { value: "hotcold", label: "Hot/cold rooms (possible duct issues)" },
-              { value: "none", label: "None / not sure" }
+              { label: "EPA Indoor Air Quality", url: "https://www.epa.gov/indoor-air-quality-iaq" },
+              { label: "EPA Air Cleaners and Filters", url: "https://www.epa.gov/indoor-air-quality-iaq/air-cleaners-and-air-filters-in-the-home" },
+              { label: "CDC Asthma", url: "https://www.cdc.gov/asthma/" },
+              { label: "Harvard Healthy Buildings", url: "https://healthybuildings.hsph.harvard.edu/" }
             ]
           },
           {
-            key: "a_duct_age",
-            type: "single",
-            title: "Duct system age",
-            options: [
-              { value: "new", label: "0-10 years" },
-              { value: "mid", label: "10-25 years" },
-              { value: "old", label: "25+ / unknown" }
-            ]
-          }
-        ]
-      },
-
-      {
-        id: "a_odors",
-        title: "Step 3: Odors, smoke, and stale air",
-        lead: "Odors and smoke often need layered solutions: filtration + purification + sometimes ventilation.",
-        blocks: [
-          { type: "video", title: "Odors vs particles", caption: "Replace VIDEO_ID.", embedUrl: "https://www.youtube.com/embed/VIDEO_ID" },
-          { type: "text", html: "<div><div class='tile' style='margin-top:10px;'><strong>Does purification replace ventilation?</strong><p>No. If the home is stuffy, ventilation (ERV/controlled fresh air) can be the missing piece.</p></div><div class='tile' style='margin-top:10px;'><strong>Do air cleaners remove cooking smells?</strong><p>Some help, but source control and ventilation matter too.</p></div></div>" }
-        ],
-        questions: [
-          {
-            key: "a_odors_freq",
-            type: "single",
-            title: "How often are odors/smoke an issue?",
-            options: [
-              { value: "rare", label: "Rare" },
-              { value: "weekly", label: "Weekly" },
-              { value: "daily", label: "Daily" },
-              { value: "seasonal", label: "Mostly seasonal (wildfires)" }
+            type: "implications",
+            title: "What this means for your home",
+            body: "Your answers control which topics are emphasized below.",
+            scenarios: [
+              { title: "Allergies or asthma", body: "Filtration and sealing usually have the biggest impact on triggers.", showIf: { any: [{ q: "a_sensitivity", has: "allergies" }, { q: "a_sensitivity", has: "asthma" }] } },
+              { title: "Pets", body: "Capture larger particles with a deep media filter and focus on airflow.", showIf: { any: [{ q: "a_pets", eq: "yes" }] } },
+              { title: "Odors", body: "Ventilation and source control matter more than standard filters.", showIf: { any: [{ q: "a_symptoms", has: "odors" }] } }
             ]
           },
           {
-            key: "a_vent_interest",
-            type: "single",
-            title: "Do you want fresher air (ventilation)?",
-            help: "Ventilation can reduce stale air and balance humidity.",
-            options: [
-              { value: "no", label: "No" },
-              { value: "maybe", label: "Maybe / tell me if needed" },
-              { value: "yes", label: "Yes" }
-            ]
-          }
-        ]
-      },
-
-      {
-        id: "a_humidity",
-        title: "Step 4: Humidity control (dry vs musty)",
-        lead: "Humidity affects comfort, sleep, skin, static, and even microbial growth.",
-        blocks: [
-          { type: "video", title: "Humidity basics", caption: "Replace VIDEO_ID.", embedUrl: "https://www.youtube.com/embed/VIDEO_ID" },
-          {
-            type: "checklist",
-            title: "Quick guidance",
+            type: "products",
+            title: "Product implications + recommendations",
+            body: "Good: better filtration. Better: sealed media cabinet. Best: media + ventilation when odors or humidity are present.",
             items: [
-              "Winter dryness - humidifier (balanced, not over-humid).",
-              "Basement musty / summer humidity - dehumidifier and/or ventilation."
+              { title: "4-inch media filtration", solves: "Dust and allergen capture", not: "Odors or gases", for: "Homes with dust/allergy concerns", notFor: "Odor-only complaints", link: "shop.html", showIf: { any: [{ q: "a_symptoms", has: "dust" }, { q: "a_symptoms", has: "allergies" }] } },
+              { title: "Ventilation (ERV)", solves: "Stale air and odors", not: "Large particle buildup", for: "Homes with odors or humidity", notFor: "Dust-only issues", link: "shop.html", showIf: { any: [{ q: "a_symptoms", has: "odors" }] } },
+              { title: "Humidification", solves: "Dry air and static", not: "Dust or odor removal", for: "Homes with dry air complaints", notFor: "High humidity climates", link: "shop.html", showIf: { any: [{ q: "a_symptoms", has: "dry" }] } }
+            ]
+          },
+          {
+            type: "deepdive",
+            title: "Go deeper (advanced)",
+            items: [
+              { q: "Go deeper: What is MERV?", a: "MERV is a filter rating for particle capture. Higher MERV can restrict airflow if the system is not designed for it." },
+              { q: "Go deeper: Why ventilation?", a: "Ventilation dilutes indoor pollutants. It complements filtration rather than replacing it." }
             ]
           }
         ],
         questions: [
-          { key: "a_dry_score", type: "slider", title: "Winter dryness", min: 0, max: 10, step: 1, suffix: "/10" },
+          { key: "a_symptoms", type: "multi", title: "What air issues do you notice?", options: [
+            { value: "dust", label: "Dust buildup" },
+            { value: "allergies", label: "Allergies/sneezing" },
+            { value: "odors", label: "Odors or smoke" },
+            { value: "dry", label: "Dry air/static" },
+            { value: "pets", label: "Pet dander" }
+          ]},
+          { key: "a_pets", type: "single", title: "Pets in the home?", options: [
+            { value: "yes", label: "Yes" },
+            { value: "no", label: "No" }
+          ]},
+          { key: "a_sensitivity", type: "multi", title: "Sensitivity in the home", help: "Select all that apply.", options: [
+            { value: "allergies", label: "Allergies" },
+            { value: "asthma", label: "Asthma" },
+            { value: "none", label: "None" }
+          ]}
+        ]
+      },
+
+      {
+        id: "a_filtration",
+        title: "Filtration and airflow",
+        lead: "Filters help only when airflow is protected and bypass leaks are sealed.",
+        blocks: [
           {
-            key: "a_musty",
-            type: "single",
-            title: "Musty smell or damp basement?",
-            options: [
-              { value: "no", label: "No" },
-              { value: "sometimes", label: "Sometimes" },
-              { value: "yes", label: "Yes" }
+            type: "explain",
+            title: "Plain-language explanation",
+            body: "A better filter is not always better air. If airflow is restricted, comfort can get worse."
+          },
+          {
+            type: "videoModule",
+            title: "Video: Filtration without airflow loss",
+            caption: "One concept only: deeper media captures more without choking airflow.",
+            thumb: "assets/img/thumb-air.png",
+            href: "#"
+          },
+          {
+            type: "chart",
+            title: "Visual / chart placeholder",
+            body: "Comparison of 1-inch vs 4-inch media filters.",
+            chartTitle: "Filter vs airflow tradeoff",
+            rows: [
+              { label: "1-inch filters", value: 45, showIf: { any: [{ q: "a_filter", eq: "1in" }] } },
+              { label: "4-inch media", value: 80, showIf: { any: [{ q: "a_filter", eq: "4in" }, { q: "a_symptoms", has: "dust" }] } }
+            ],
+            caption: "What this shows: deeper media can capture more without restricting airflow."
+          },
+          {
+            type: "evidenceAccordion",
+            title: "Evidence & Sources",
+            summary: "Open sources (EPA, ASHRAE)",
+            items: [
+              { label: "EPA Air Cleaners and Filters", url: "https://www.epa.gov/indoor-air-quality-iaq/air-cleaners-and-air-filters-in-the-home" },
+              { label: "ASHRAE Standards Overview", url: "https://www.ashrae.org/technical-resources/standards-and-guidelines" },
+              { label: "CDC Indoor Air Basics", url: "https://www.cdc.gov/healthyhomes/bytopic/airquality.html" }
+            ]
+          },
+          {
+            type: "implications",
+            title: "What this means for your home",
+            body: "Use deeper media when dust or allergy symptoms are strong.",
+            scenarios: [
+              { title: "Dust or allergy symptoms", body: "A 4-inch media cabinet is usually the best balance of capture and airflow.", showIf: { any: [{ q: "a_symptoms", has: "dust" }, { q: "a_symptoms", has: "allergies" }] } },
+              { title: "Pets in the home", body: "Deep media plus sealed bypass gaps helps capture pet dander.", showIf: { any: [{ q: "a_pets", eq: "yes" }] } },
+              { title: "1-inch filters today", body: "Upgrading to a media cabinet often improves capture without hurting airflow.", showIf: { any: [{ q: "a_filter", eq: "1in" }] } },
+              { title: "Tight space", body: "Compact cabinets and careful placement solve space constraints.", showIf: { any: [{ q: "a_space", eq: "tight" }] } },
+              { title: "Low maintenance", body: "Choose longer-life filters and avoid high-maintenance add-ons.", showIf: { any: [{ q: "a_maintenance", eq: "low" }] } },
+              { title: "Health priority", body: "Focus on particle capture and sealing first.", showIf: { any: [{ q: "a_priority", eq: "health" }] } },
+              { title: "Larger homes", body: "Higher airflow systems benefit from deeper media to maintain capture.", showIf: { any: [{ q: "a_home_size", eq: "large" }] } }
+            ]
+          },
+          {
+            type: "products",
+            title: "Product implications + recommendations",
+            body: "Good: better filter. Better: sealed cabinet + media. Best: media + ventilation when odors are present.",
+            items: [
+              { title: "4-inch media cabinet", solves: "Dust and allergen capture", not: "Odors or gases", for: "Homes with dust/allergy concerns", notFor: "Odor-only complaints", link: "shop.html" }
+            ]
+          },
+          {
+            type: "deepdive",
+            title: "Go deeper (advanced)",
+            items: [
+              { q: "Go deeper: Static pressure", a: "Static pressure tells you how hard the blower is working. High pressure means airflow problems." },
+              { q: "Go deeper: Sealing bypass", a: "Air that bypasses the filter never gets cleaned. Sealing the cabinet is key." }
             ]
           }
+        ],
+        questions: [
+          { key: "a_filter", type: "single", title: "Current filter type", options: [
+            { value: "1in", label: "1-inch filter" },
+            { value: "4in", label: "4-inch media" },
+            { value: "unknown", label: "Not sure" }
+          ]},
+          { key: "a_priority", type: "single", title: "Priority", options: [
+            { value: "health", label: "Health" },
+            { value: "comfort", label: "Comfort" },
+            { value: "efficiency", label: "Efficiency" }
+          ]},
+          { key: "a_home_size", type: "single", title: "Home size", options: [
+            { value: "small", label: "Under 1,800 sq ft" },
+            { value: "medium", label: "1,800-3,000 sq ft" },
+            { value: "large", label: "3,000+ sq ft" }
+          ]},
+          { key: "a_space", type: "single", title: "Space for equipment?", options: [
+            { value: "plenty", label: "Plenty of space" },
+            { value: "tight", label: "Tight space" },
+            { value: "unknown", label: "Not sure" }
+          ]},
+          { key: "a_maintenance", type: "single", title: "Maintenance tolerance", options: [
+            { value: "low", label: "Low (set-and-forget)" },
+            { value: "medium", label: "Medium" },
+            { value: "high", label: "High (ok with regular upkeep)" }
+          ]}
         ]
       },
 
       {
         id: "a_review",
-        title: "Review: your air bundle",
-        lead: "This is your recommended air plan with pricing. Add to cart or schedule a visit to confirm cabinet sizing and duct conditions.",
+        title: "Review: your air plan",
+        lead: "Education comes first. Here is your recommended plan with pricing.",
         isReview: true,
         blocks: [
-          { type: "callout", title: "Before you add to cart", body: "You can remove any items you do not want from the recommendation list. Quote-only lines mean we recommend verifying sizing or installation details before finalizing." },
-          { type: "video", title: "Air recommendation walkthrough", caption: "Replace VIDEO_ID with a short summary video that explains the bundle.", embedUrl: "https://www.youtube.com/embed/VIDEO_ID" },
-          { type: "callout", title: "Best outcomes", body: "Most air quality wins come from (1) a deep filter cabinet, (2) sealing bypass, and (3) adding purification only when symptoms justify it." }
+          { type: "callout", title: "Before you add to cart", body: "You can remove any items you do not want and still keep the rest of the bundle. If any line says Quote, we recommend a quick verification step before finalizing." },
+          { type: "video", title: "How to read your recommendation", caption: "Replace VIDEO_ID.", embedUrl: "https://www.youtube.com/embed/VIDEO_ID" }
         ],
         questions: [
-          { key: "a_notes", type: "textarea", title: "Optional notes", help: "Any details: remodeled dust, pets, wildfire concerns, hot/cold rooms, musty basement?" }
+          { key: "a_notes", type: "textarea", title: "Optional notes", help: "Any known airflow issues or noisy vents?" }
         ]
       }
     ],
+
     rules: [
-      // filtration upgrade if 1" or dust/allergies/pets
-      { when: { any: [{ q: "a_filter", eq: "1in" }, { q: "a_goal", has: "dust" }, { q: "a_goal", has: "allergies" }, { q: "a_goal", has: "pets" }] }, addProducts: ["air_4in_filter_upgrade"] },
-      // bypass evaluation if signs or old ducts or comfort
-      { when: { any: [{ q: "a_bypass_signs", has: "gaps" }, { q: "a_bypass_signs", has: "dusty_returns" }, { q: "a_bypass_signs", has: "attic_smell" }, { q: "a_duct_age", eq: "old" }, { q: "a_bypass_signs", has: "hotcold" }] }, addProducts: ["air_duct_seal_check"] },
-      // purification when allergies/high sensitivity or odors/smoke frequent
-      { when: { any: [{ q: "a_sensitivity", in: ["high", "very_high"] }, { q: "a_goal", has: "odors" }, { q: "a_goal", has: "smoke" }] }, addProducts: ["air_purifier_addon"] },
-      { when: { any: [{ q: "a_odors_freq", in: ["daily", "seasonal"] }] }, addProducts: ["air_reme_halo"] },
-      // humidity
-      { when: { any: [{ q: "a_dry_score", gte: 7 }, { q: "a_goal", has: "dry" }] }, addProducts: ["air_humidifier"] },
-      { when: { any: [{ q: "a_musty", eq: "yes" }, { q: "a_goal", has: "humid" }] }, addProducts: ["air_dehumidifier"] },
-      // ventilation interest
-      { when: { any: [{ q: "a_goal", has: "fresh_air" }, { q: "a_vent_interest", eq: "yes" }, { q: "a_odors_freq", eq: "daily" }] }, addProducts: ["air_erv_ventilation"] }
+      { when: { any: [{ q: "a_symptoms", has: "dust" }, { q: "a_symptoms", has: "allergies" }, { q: "a_pets", eq: "yes" }] },
+        addProducts: ["air_4in_filter_upgrade"],
+        addExplainers: [{ title: "Filtration focus", body: "Dust and allergens are best addressed with deeper media filtration and sealed bypass gaps." }]
+      },
+      { when: { any: [{ q: "a_symptoms", has: "odors" }] },
+        addProducts: ["air_erv_ventilation"],
+        addExplainers: [{ title: "Ventilation focus", body: "Odors and stale air respond better to ventilation than to higher MERV filters." }]
+      },
+      { when: { any: [{ q: "a_symptoms", has: "dry" }] },
+        addProducts: ["air_humidifier"],
+        addExplainers: [{ title: "Humidity balance", body: "Dry air and static often improve with controlled humidification." }]
+      },
+      { when: { any: [{ q: "a_maintenance", eq: "low" }] },
+        addExplainers: [{ title: "Low-maintenance focus", body: "We will favor longer-life filters and fewer add-ons." }]
+      }
     ]
   };
 

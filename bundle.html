@@ -1,71 +1,88 @@
-<!doctype html>
+﻿<!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Bundle - Healthy Water & Air</title>
   <link rel="stylesheet" href="assets/styles.css" />
-<script src="assets/cart.js"></script>
-
+  <script src="assets/cart.js"></script>
   <script src="assets/catalog.js"></script>
 </head>
 <body>
 <div id="header-placeholder"></div>
-<section>
-  <div class="container">
-    <span class="eyebrow">Bundle</span>
-    <h2>Your bundled solution</h2>
-    <p class="lead">Review the items, remove anything you do not want, then proceed to checkout.</p>
 
-    <div class="steps">
-      <a class="stepPill" href="#">Step 1 - Symptoms</a>
-      <a class="stepPill" href="#">Step 2 - Questions</a>
-      <a class="stepPill active" href="#">Step 3 - Bundle</a>
+<section class="hero hero-slim">
+  <div class="container hero-grid">
+    <div>
+      <div class="kicker">Bundle</div>
+      <h1>Your bundled solution</h1>
+      <p class="lead">Review the items, remove anything you do not want, then proceed to checkout.</p>
+    </div>
+    <div class="hero-illus-wrap">
+      <img class="hero-illus" src="assets/img/illus-shop.png" alt="Bundle illustration" />
     </div>
   </div>
 </section>
 
-<section>
-  <div class="container grid-2">
-    <div>
-      <div class="card pad">
-        <div style="font-weight:900;">Selected issues</div>
-        <div class="tiny" id="issuesList" style="margin-top:6px;">Loading...</div>
-      </div>
-
-      <div class="card pad" style="margin-top:12px;">
-        <div style="font-weight:900; margin-bottom:10px;">Recommended items</div>
-        <div id="bundleItems"></div>
-
-        <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:14px; border-top:1px solid rgba(226,232,240,.9); padding-top:14px;">
-          <div>
-            <div style="font-weight:900;">Total</div>
-            <div class="tiny">Included / Quote items are confirmed during the free check.</div>
-          </div>
-          <div style="font-weight:900; font-size:22px;" id="bundleTotal">$0</div>
-        </div>
-
-        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
-          <button class="btn primary" id="proceedToCart" type="button">Proceed to Checkout</button>
-          <a class="btn secondary" href="cart.html">View Cart</a>
-          <a class="btn" href="start.html">Restart</a>
-        </div>
-
-        <div class="tiny" style="margin-top:10px;">Checkout saves your selected items to your cart on this device (static site).</div>
+<section class="section-bg">
+  <div class="container">
+    <div class="card pad">
+      <span class="eyebrow">Bundle steps</span>
+      <div class="steps">
+        <a class="stepPill" href="#">Step 1 - Symptoms</a>
+        <a class="stepPill" href="#">Step 2 - Questions</a>
+        <a class="stepPill active" href="#">Step 3 - Bundle</a>
       </div>
     </div>
 
-    <div class="video">
-      <div class="frame">
-        <div style="text-align:center">
-          <div class="play"></div>
-          <div style="margin-top:14px; font-weight:900; color:var(--primary);">VIDEO PLACEHOLDER</div>
-          <div style="margin-top:6px; color:var(--muted); font-size:13px;">Bundle walkthrough (60-90 sec)</div>
+    <div style="height:16px;"></div>
+
+    <div class="grid grid-2">
+      <div>
+        <div class="card pad">
+          <div style="font-weight:900;">Selected issues</div>
+          <div class="tiny" id="issuesList" style="margin-top:6px;">Loading...</div>
+        </div>
+
+        <div class="card pad" style="margin-top:12px;">
+          <div style="font-weight:900; margin-bottom:10px;">Recommended items</div>
+          <div id="bundleItems"></div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:12px; margin-top:14px; border-top:1px solid rgba(226,232,240,.9); padding-top:14px;">
+            <div>
+              <div style="font-weight:900;">Total</div>
+              <div class="tiny">Included / Quote items are confirmed during the free check.</div>
+            </div>
+            <div style="font-weight:900; font-size:22px;" id="bundleTotal">$0</div>
+          </div>
+
+          <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;">
+            <button class="btn primary" id="proceedToCart" type="button">Proceed to Checkout</button>
+            <a class="btn secondary" href="cart.html">View Cart</a>
+            <a class="btn" href="start.html">Restart</a>
+          </div>
+
+          <div class="tiny" style="margin-top:10px;">Checkout saves your selected items to your cart on this device (static site).</div>
         </div>
       </div>
-      <div class="label">
-        <span><strong>Bundle explanation</strong></span>
-        <span class="tiny">Why these items were selected</span>
+
+      <div>
+        <figure class="imgblock" style="margin-bottom:12px;">
+          <img src="assets/img/thumb-generic.png" alt="Bundle preview">
+        </figure>
+        <div class="video">
+          <div class="frame">
+            <div style="text-align:center">
+              <div class="play"></div>
+              <div style="margin-top:14px; font-weight:900; color:var(--primary);">VIDEO PLACEHOLDER</div>
+              <div style="margin-top:6px; color:var(--muted); font-size:13px;">Bundle walkthrough (60-90 sec)</div>
+            </div>
+          </div>
+          <div class="label">
+            <span><strong>Bundle explanation</strong></span>
+            <span class="tiny">Why these items were selected</span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -109,7 +126,7 @@
     air_pets: 'Air - pet dander',
   };
   const list = document.getElementById('issuesList');
-  list.textContent = issues.length ? issues.map(i=>names[i]||i).join(' · ') : 'No issues selected.';
+  list.textContent = issues.length ? issues.map(i=>names[i]||i).join(' | ') : 'No issues selected.';
 
   const bundles = window.HWA_BUNDLES || {};
   const products = window.HWA_PRODUCTS || {};
@@ -155,7 +172,7 @@
             <div>
               <div style="font-weight:900;">${p.name}</div>
               <div class="tiny">${p.desc || ''}</div>
-              <div class="tiny" style="margin-top:6px;">From: ${it.sources.join(' · ')}</div>
+              <div class="tiny" style="margin-top:6px;">From: ${it.sources.join(' | ')}</div>
             </div>
           </div>
           <div style="text-align:right; min-width:140px;">

@@ -142,5 +142,40 @@
     ensureScript(BASE + 'assets/nav.js').then(()=>{
       if (window.HWA_INIT_NAV) window.HWA_INIT_NAV();
     });
+
+    // Card click routing for elements with data-href
+    document.querySelectorAll('[data-href]').forEach(el=>{
+      if (el.getAttribute('role') === null) el.setAttribute('role','link');
+      el.addEventListener('click', (e)=>{
+        if (e.target && e.target.closest && e.target.closest('a, button, input, select, textarea')) return;
+        const href = el.getAttribute('data-href');
+        if (href) window.location.href = href;
+      });
+      el.addEventListener('keydown', (e)=>{
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          const href = el.getAttribute('data-href');
+          if (href) window.location.href = href;
+        }
+      });
+      if (!el.hasAttribute('tabindex')) el.setAttribute('tabindex', '0');
+    });
+
+    // Scroll reveal for education blocks/cards
+    try{
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+        const targets = document.querySelectorAll('.card, .edu-block, .media-card, .pillar-card, .video, .visual-lg');
+        targets.forEach(el=>el.classList.add('reveal'));
+        const io = new IntersectionObserver((entries)=>{
+          entries.forEach(entry=>{
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              io.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+        targets.forEach(el=>io.observe(el));
+      }
+    }catch(_){}
   });
 })();

@@ -24,11 +24,20 @@
     return Object.entries(src).map(([id,p])=> ({ id, ...p }));
   }
 
+  function guideLink(cat){
+    const c = lc(cat);
+    if (c.includes("water")) return { href: "water-guide.html", label: "Water guide" };
+    if (c.includes("air")) return { href: "air-guide.html", label: "Air guide" };
+    if (c.includes("hvac")) return { href: "hvac-guide.html", label: "HVAC guide" };
+    return { href: "home-guide.html", label: "Home guide" };
+  }
+
   function renderCard(p){
     const img = p.image ? `<img class="prod-img" src="${p.image}" alt="${escapeHtml(p.name||"")}" loading="lazy" />` : "";
     const cat = escapeHtml(p.category||"");
     const sub = escapeHtml(p.subcategory||"");
     const price = moneyRange(p) || (p.unit ? escapeHtml(p.unit) : "Price TBD");
+    const guide = guideLink(p.category||"");
 
     const addBtn = (window.HWA_CART && typeof window.HWA_CART.add === "function")
       ? `<button class="btn btn-sm" data-add="${escapeHtml(p.id)}">Add</button>`
@@ -46,7 +55,10 @@
         <div class="muted" style="margin-top:8px;">${escapeHtml(p.short || p.desc || "")}</div>
         <div class="prod-bottom">
           <div class="price">${escapeHtml(price)}</div>
-          ${addBtn}
+          <div style="display:flex; gap:8px; align-items:center;">
+            <a class="btn btn-sm btn-ghost" href="${guide.href}">Learn</a>
+            ${addBtn}
+          </div>
         </div>
       </div>
     `;

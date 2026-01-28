@@ -1,19 +1,81 @@
-(function(){
+﻿(function(){
   const Flow = {
     id: "water",
     badge: "Water guide",
-    subtitle: "Taste, hardness, staining, and safety",
+    subtitle: "Taste, hardness, staining, and confidence",
     title: "Water Quality Guide",
     steps: [
       {
         id: "w_intro",
-        title: "Water quality plan builder",
-        lead: "This guide teaches as you go. We’ll identify problems, explain what they usually mean, and build a best-fit bundle with pricing.",
+        title: "Water quality basics",
+        lead: "Education first. Your answers refine emphasis without changing the learning path.",
         blocks: [
-          { type: "callout", title: "What you’ll get", body: "A recommended water bundle (test + treatment) and a clear explanation of why each item is included." },
-          { type: "video", title: "Utah water: hardness + treatment basics", caption: "Replace VIDEO_ID.", embedUrl: "https://www.youtube.com/embed/VIDEO_ID" },
-          { type: "text", html: "<div class=\"visual-lg\"><img src=\"assets/img/visuals/water-layers.svg\" alt=\"Water treatment layers\"></div>" },
-          { type: "text", html: "<div class=\"tile\"><strong>How the guide thinks</strong><p>Whole-home items protect plumbing and showers (sediment, carbon, softening). A drinking-water system (usually RO) is the biggest taste change.</p></div>" }
+          {
+            type: "explain",
+            title: "Plain-language explanation",
+            body: "Most water issues come from three buckets: particles (sediment), dissolved minerals (hardness), and disinfectants or contaminants (taste/odor and confidence). The right fix matches the right problem."
+          },
+          {
+            type: "videoModule",
+            title: "Video: Water basics in 60 seconds",
+            caption: "One concept only: the three problem buckets and how treatment layers map.",
+            thumb: "assets/img/thumb-water.png",
+            href: "#"
+          },
+          {
+            type: "chart",
+            title: "Visual / chart placeholder",
+            body: "Simple diagram showing treatment layers and where each problem is addressed.",
+            chartTitle: "Layered treatment overview",
+            rows: [
+              { label: "Sediment", value: 35 },
+              { label: "Carbon", value: 60 },
+              { label: "Softening", value: 75 },
+              { label: "RO (drinking)", value: 85 }
+            ],
+            caption: "What this shows: each layer addresses a different problem."
+          },
+          {
+            type: "evidenceAccordion",
+            title: "Evidence & Sources",
+            summary: "Open sources (EPA, CDC, NSF, WQA)",
+            items: [
+              { label: "EPA Drinking Water Standards", url: "https://www.epa.gov/sdwa" },
+              { label: "USGS Water Hardness", url: "https://water.usgs.gov/owq/hardness-alkalinity.html" },
+              { label: "CDC Private Well Guidance", url: "https://www.cdc.gov/healthywater/drinking/private/wells/", showIf: { any: [{ q: "w_source", eq: "well" }] } },
+              { label: "NSF Water Filter Standards", url: "https://www.nsf.org/consumer-resources/water-quality/water-filters-testing-treatment" },
+              { label: "WQA Learn About Water", url: "https://www.wqa.org/learn-about-water" }
+            ]
+          },
+          {
+            type: "implications",
+            title: "What this means for your home",
+            body: "Your answers focus the examples and the recommended layers below.",
+            scenarios: [
+              { title: "City water", body: "Carbon is the most common layer for taste/odor and shower feel.", showIf: { any: [{ q: "w_source", eq: "city" }] } },
+              { title: "Private well", body: "Testing plus sediment and disinfection layers are usually the starting point.", showIf: { any: [{ q: "w_source", eq: "well" }] } },
+              { title: "Hardness symptoms", body: "Scale or spotting points to softening.", showIf: { any: [{ q: "w_symptoms", has: "scale" }, { q: "w_symptoms", has: "spotting" }] } },
+              { title: "Safety priority", body: "If confidence is the goal, testing plus RO gives the most reliable improvement.", showIf: { any: [{ q: "w_goals", has: "safety" }] } }
+            ]
+          },
+          {
+            type: "products",
+            title: "Product implications + recommendations",
+            body: "Use products only when they match the problem. Good: carbon for taste. Better: RO for drinking. Best: carbon + RO + testing for confidence.",
+            items: [
+              { title: "Sediment filtration", solves: "Grit, cloudiness, clogged fixtures", not: "Dissolved minerals or chlorine taste", for: "Particles in water or older plumbing", notFor: "Hardness-only issues", link: "shop.html", showIf: { any: [{ q: "w_source", eq: "well" }] } },
+              { title: "Carbon filtration", solves: "Chlorine taste/odor and shower feel", not: "Scale or heavy minerals", for: "City water taste/odor", notFor: "Scale-only complaints", link: "shop.html", showIf: { any: [{ q: "w_goals", has: "taste" }, { q: "w_goals", has: "odor" }] } },
+              { title: "Water test", solves: "Confirms hardness and safety baseline", not: "Treats water by itself", for: "Safety or unknown issues", notFor: "When you already have recent results", link: "shop.html", showIf: { any: [{ q: "w_goals", has: "safety" }, { q: "w_symptoms", has: "concern" }] } }
+            ]
+          },
+          {
+            type: "deepdive",
+            title: "Go deeper (advanced)",
+            items: [
+              { q: "Go deeper: NSF/ANSI standards", a: "NSF/ANSI standards (42, 53, 58) define verified reduction claims. Match certifications to your goals." },
+              { q: "Go deeper: Why tests matter", a: "A basic test confirms hardness, sediment, and disinfectant levels so you do not over-buy or miss key issues." }
+            ]
+          }
         ],
         questions: [
           { key: "w_source", type: "single", title: "Water source", options: [
@@ -28,32 +90,80 @@
             { value: "showers", label: "Better showers/skin feel" },
             { value: "stains", label: "Fix staining" },
             { value: "safety", label: "Higher confidence/safety" }
-          ]},
-          { key: "w_priority", type: "single", title: "How strong do you want the plan to be?", help: "Stronger plans include more testing and higher-confidence layers.", options: [
-            { value: "basic", label: "Basic (essentials)" },
-            { value: "balanced", label: "Balanced (best value)" },
-            { value: "strong", label: "Strong (highest confidence)" }
           ]}
-        ],
-        side: [
-          { title: "Biggest homeowner wins", body: "Most people feel the biggest improvement from (1) soft water for showers and fixtures and (2) RO for drinking taste." }
         ]
       },
 
       {
-        id: "w_symptoms",
-        title: "Step 1: Symptoms checklist",
-        lead: "Choose what you notice - we’ll map these to causes and solutions.",
+        id: "w_hardness",
+        title: "Hardness, scale, and staining",
+        lead: "Hardness creates scale, spotting, and appliance wear.",
         blocks: [
-          { type: "callout", title: "What these symptoms usually mean", body: "Water issues tend to show up as taste/odor, scaling, staining, dryness, or appliance wear. The goal here is to narrow to the most likely cause so you don’t over-buy." },
-          { type: "checklist", title: "Quick homeowner checks", items: [
-            "Is the issue at every faucet or just one?",
-            "Cold water only, hot water only, or both?",
-            "Does it change after a filter change or after rain/snowmelt?",
-            "Any new plumbing work, softener changes, or well service recently?"
-          ]},
-          { type: "video", title: "How to recognize common water problems", caption: "Replace VIDEO_ID.", embedUrl: "https://www.youtube.com/embed/VIDEO_ID" },
-          { type: "text", html: "<div class='tile'><strong>Tip</strong><p>If you’re unsure, pick the closest match. The final step can mark items as confirm in-home.</p></div>" }
+          {
+            type: "explain",
+            title: "Plain-language explanation",
+            body: "Hardness is dissolved minerals that leave scale. Scale lowers water heater efficiency and shortens appliance life."
+          },
+          {
+            type: "videoModule",
+            title: "Video: Hard water in 60 seconds",
+            caption: "One concept only: how scale forms and why softeners work.",
+            thumb: "assets/img/thumb-generic.png",
+            href: "#"
+          },
+          {
+            type: "chart",
+            title: "Visual / chart placeholder",
+            body: "Simple chart showing scale risk by hardness range.",
+            chartTitle: "Scale risk by hardness",
+            rows: [
+              { label: "0-5 gpg", value: 20 },
+              { label: "6-10 gpg", value: 55 },
+              { label: "11-20 gpg", value: 80 },
+              { label: "Staining risk (iron/manganese)", value: 70, showIf: { any: [{ q: "w_symptoms", has: "stains" }] } }
+            ],
+            caption: "What this shows: scale risk rises quickly as hardness increases."
+          },
+          {
+            type: "evidenceAccordion",
+            title: "Evidence & Sources",
+            summary: "Open sources (USGS, Extension, WQA)",
+            items: [
+              { label: "USGS Hardness Ranges", url: "https://water.usgs.gov/owq/hardness-alkalinity.html" },
+              { label: "Utah State University Water Quality", url: "https://extension.usu.edu/waterquality/" },
+              { label: "WQA Treatment Basics", url: "https://www.wqa.org/learn-about-water" }
+            ]
+          },
+          {
+            type: "implications",
+            title: "What this means for your home",
+            body: "If you see scale or spotting, softening is usually the direct fix.",
+            scenarios: [
+              { title: "Scale or spotting present", body: "A properly sized softener is the most direct solution.", showIf: { any: [{ q: "w_symptoms", has: "scale" }, { q: "w_symptoms", has: "spotting" }] } },
+              { title: "Staining colors", body: "Orange/brown often points to iron; black/purple to manganese.", showIf: { any: [{ q: "w_symptoms", has: "stains" }] } },
+              { title: "Larger households", body: "Sizing for more people prevents frequent regeneration and low pressure.", showIf: { any: [{ q: "w_household", eq: "5+" }] } },
+              { title: "Older homes", body: "Older plumbing can add sediment or corrosion, which may require pre-filtration.", showIf: { any: [{ q: "w_home_age", eq: "old" }] } },
+              { title: "Tight space", body: "Compact or stacked systems can solve space constraints without sacrificing performance.", showIf: { any: [{ q: "w_space", eq: "tight" }] } },
+              { title: "Low maintenance", body: "Favor fewer cartridges and longer service intervals.", showIf: { any: [{ q: "w_maintenance", eq: "low" }] } }
+            ]
+          },
+          {
+            type: "products",
+            title: "Product implications + recommendations",
+            body: "Softening targets scale. Carbon targets taste/odor. Use the right tool for the symptom.",
+            items: [
+              { title: "Water softener", solves: "Scale, spotting, dry skin", not: "Chlorine taste/odor", for: "Homes with hardness symptoms", notFor: "Taste-only issues", link: "shop.html", showIf: { any: [{ q: "w_symptoms", has: "scale" }, { q: "w_symptoms", has: "spotting" }] } },
+              { title: "Sediment filter", solves: "Grit and particles", not: "Dissolved minerals", for: "Sediment or older plumbing", notFor: "Hardness-only issues", link: "shop.html", showIf: { any: [{ q: "w_symptoms", has: "sediment" }, { q: "w_home_age", eq: "old" }] } }
+            ]
+          },
+          {
+            type: "deepdive",
+            title: "Go deeper (advanced)",
+            items: [
+              { q: "Go deeper: Why sizing matters", a: "Oversized softeners waste salt. Undersized units regenerate too often. Sizing uses hardness and household size." },
+              { q: "Go deeper: Staining colors", a: "Iron and manganese usually need targeted filtration beyond a standard softener." }
+            ]
+          }
         ],
         questions: [
           { key: "w_symptoms", type: "multi", title: "What water issues do you notice?", options: [
@@ -66,96 +176,96 @@
             { value: "cloudy", label: "Cloudy water", meta: "Often sediment or aeration" },
             { value: "rottenegg", label: "Rotten egg smell", meta: "Often sulfur/hydrogen sulfide" },
             { value: "concern", label: "Health concerns / unknown", meta: "Want more reduction and confidence" }
-          ]}
-        ],
-        side: [
-          { title: "What symptoms usually mean", body: "Scale/spotting points strongly to hardness. Chlorine points to disinfection. Sediment points to particles that should be filtered early." }
-        ]
-      },
-
-      {
-        id: "w_details",
-        title: "Step 2: Home + plumbing details",
-        lead: "These questions help size the right solution and avoid surprises.",
-        blocks: [
-          { type: "callout", title: "Why we ask", body: "House size, plumbing age, and water-heater condition can change taste and staining. This step helps separate supply issues from in-home issues." },
-          { type: "video", title: "Hardness vs sediment vs staining", caption: "Replace VIDEO_ID.", embedUrl: "https://www.youtube.com/embed/VIDEO_ID" }
-        ],
-        questions: [
+          ]},
           { key: "w_household", type: "single", title: "People in the home", options: [
             { value: "1-2", label: "1-2" },
             { value: "3-4", label: "3-4" },
             { value: "5+", label: "5+" }
           ]},
-          { key: "w_bathrooms", type: "single", title: "Bathrooms", options: [
-            { value: "1", label: "1" },
-            { value: "2", label: "2" },
-            { value: "3+", label: "3+" }
-          ]},
-          { key: "w_plumbing_age", type: "single", title: "Home plumbing age", options: [
-            { value: "new", label: "Newer (0-10 years)" },
+          { key: "w_home_age", type: "single", title: "Age of home", options: [
+            { value: "new", label: "0-10 years" },
             { value: "mid", label: "10-30 years" },
-            { value: "old", label: "30+ years / unknown" }
+            { value: "old", label: "30+ years" }
           ]},
-          { key: "w_water_heater", type: "single", title: "Water heater age", options: [
-            { value: "0-5", label: "0-5 years" },
-            { value: "6-10", label: "6-10 years" },
-            { value: "11+", label: "11+ years / unknown" }
-          ]},
-          { key: "w_stain_type", type: "single", title: "If you have staining, what color is it most often?", showIf: { any: [{ q: "w_symptoms", has: "stains" }, { q: "w_goals", has: "stains" }] }, options: [
-            { value: "orange", label: "Orange/brown (often iron)" },
-            { value: "black", label: "Black/purple (often manganese)" },
-            { value: "blue", label: "Blue/green (often copper/corrosion)" },
-            { value: "white", label: "White rings (often hardness scale)" },
+          { key: "w_space", type: "single", title: "Space for equipment?", options: [
+            { value: "plenty", label: "Plenty of space" },
+            { value: "tight", label: "Tight space" },
             { value: "unknown", label: "Not sure" }
+          ]},
+          { key: "w_maintenance", type: "single", title: "Maintenance tolerance", options: [
+            { value: "low", label: "Low (set-and-forget)" },
+            { value: "medium", label: "Medium" },
+            { value: "high", label: "High (ok with regular upkeep)" }
           ]}
         ]
       },
 
       {
-        id: "w_causes",
-        title: "Step 3: Likely causes (education)",
-        lead: "These are the most common root causes behind the symptoms you selected.",
+        id: "w_taste",
+        title: "Taste, odor, and drinking confidence",
+        lead: "Taste and confidence usually come from carbon + RO at the drinking tap.",
         blocks: [
-          { type: "text", html: "<div><div class='tile' style='margin-top:10px;'><strong>Hardness vs sediment - what’s the difference?</strong><p>Hardness is dissolved minerals (calcium/magnesium) that create scale. Sediment is physical particles that cause cloudiness/grit and can clog fixtures.</p></div><div class='tile' style='margin-top:10px;'><strong>Chlorine smell - is that dangerous?</strong><p>Chlorine is commonly used for disinfection. Many people prefer to remove it for taste/odor and to reduce skin/hair dryness.</p></div><div class='tile' style='margin-top:10px;'><strong>Rotten egg smell (sulfur) - what causes it?</strong><p>Often from hydrogen sulfide in the supply or reactions in the water heater. Treatment depends on whether it is hot water, cold water, or both.</p></div></div>" },
-          { type: "video", title: "Source water basics (city vs well)", caption: "Replace VIDEO_ID.", embedUrl: "https://www.youtube.com/embed/VIDEO_ID" }
-        ],
-        questions: [
-          { key: "w_hardness", type: "single", title: "Do you know hardness (gpg)?", options: [
-            { value: "unknown", label: "Unknown" },
-            { value: "low", label: "0-5" },
-            { value: "med", label: "6-10" },
-            { value: "high", label: "11-20" },
-            { value: "vhigh", label: "20+" }
-          ]}
-        ]
-      },
-
-      {
-        id: "w_drinking",
-        title: "Step 4: Drinking water - learn about RO",
-        lead: "Taste and confidence usually come from a dedicated drinking-water system.",
-        blocks: [
-          { type: "callout", title: "Drinking water focus", body: "If your main goal is great-tasting drinking and cooking water, a point-of-use system (like RO) is often the best value." },
-          { type: "video", title: "Reverse osmosis - what it does and doesn’t do", caption: "Replace VIDEO_ID.", embedUrl: "https://www.youtube.com/embed/VIDEO_ID" },
-          { type: "text", html: "<div><div class='tile' style='margin-top:10px;'><strong>Does RO waste water?</strong><p>Yes, some. Modern systems are more efficient, and the taste + reduction benefits are often worth it for many homeowners.</p></div><div class='tile' style='margin-top:10px;'><strong>Is RO whole-home?</strong><p>Usually no. RO is typically installed at the kitchen sink for drinking and cooking.</p></div></div>" }
-        ],
-        questions: [
-          { key: "w_cooking", type: "single", title: "Do you cook at home most days?", help: "If yes, RO has a bigger impact (coffee, soup, pasta, ice).", options: [
-            { value: "yes", label: "Yes" },
-            { value: "sometimes", label: "Sometimes" },
-            { value: "no", label: "No" }
-          ]}
-        ]
-      },
-
-      {
-        id: "w_ro",
-        title: "Step 5: Reverse osmosis options",
-        lead: "Now that you’ve seen what RO does, decide whether you want it and what style you prefer.",
-        blocks: [
-          { type: "callout", title: "RO decision", body: "If you want the single biggest drinking-water improvement, RO is usually it." },
-          { type: "video", title: "RO options (standard vs remineralized)", caption: "Replace VIDEO_ID.", embedUrl: "https://www.youtube.com/embed/VIDEO_ID" }
+          {
+            type: "explain",
+            title: "Plain-language explanation",
+            body: "Carbon removes common taste/odor issues. RO (reverse osmosis) targets many dissolved contaminants at the drinking faucet."
+          },
+          {
+            type: "videoModule",
+            title: "Video: RO in 60 seconds",
+            caption: "One concept only: RO is for drinking water, not whole-home.",
+            thumb: "assets/img/thumb-water.png",
+            href: "#"
+          },
+          {
+            type: "chart",
+            title: "Visual / chart placeholder",
+            body: "Simple comparison of taste improvement sources.",
+            chartTitle: "Taste improvement impact",
+            rows: [
+              { label: "Carbon filtration", value: 70, showIf: { any: [{ q: "w_goals", has: "taste" }, { q: "w_goals", has: "odor" }] } },
+              { label: "RO for drinking", value: 85, showIf: { any: [{ q: "w_ro_want", in: ["yes","maybe"] }, { q: "w_goals", has: "safety" }] } },
+              { label: "Softener only", value: 30 }
+            ],
+            caption: "What this shows: taste improvements typically come from carbon or RO."
+          },
+          {
+            type: "evidenceAccordion",
+            title: "Evidence & Sources",
+            summary: "Open sources (EPA, NSF)",
+            items: [
+              { label: "EPA Drinking Water Guidance", url: "https://www.epa.gov/ground-water-and-drinking-water" },
+              { label: "NSF Filter Performance", url: "https://www.nsf.org/consumer-resources/water-quality/water-filters-testing-treatment" },
+              { label: "CDC Private Well Basics", url: "https://www.cdc.gov/healthywater/drinking/private/wells/", showIf: { any: [{ q: "w_source", eq: "well" }] } }
+            ]
+          },
+          {
+            type: "implications",
+            title: "What this means for your home",
+            body: "Use RO when taste and confidence are top priorities.",
+            scenarios: [
+              { title: "Confidence priority", body: "If safety confidence is the goal, RO plus testing is usually the strongest step.", showIf: { any: [{ q: "w_goals", has: "safety" }, { q: "w_symptoms", has: "concern" }] } },
+              { title: "Taste/odor priority", body: "Whole-home carbon helps showers and laundry; RO improves drinking taste most.", showIf: { any: [{ q: "w_goals", has: "taste" }, { q: "w_goals", has: "odor" }] } },
+              { title: "Comfort priority", body: "Focus on carbon for shower feel plus RO for drinking taste.", showIf: { any: [{ q: "w_priority", eq: "comfort" }] } }
+            ]
+          },
+          {
+            type: "products",
+            title: "Product implications + recommendations",
+            body: "Good: carbon for taste/odor. Better: RO for drinking. Best: carbon + RO + test for confidence.",
+            items: [
+              { title: "Whole-home carbon", solves: "Chlorine taste/odor, shower feel", not: "Scale", for: "City water taste/odor", notFor: "Scale-only issues", link: "shop.html", showIf: { any: [{ q: "w_goals", has: "taste" }, { q: "w_goals", has: "odor" }] } },
+              { title: "Reverse osmosis (RO)", solves: "Drinking water taste and dissolved contaminants", not: "Whole-home hardness", for: "Homeowners who cook/drink at home", notFor: "Shower-only improvements", link: "shop.html", showIf: { any: [{ q: "w_ro_want", in: ["yes","maybe"] }, { q: "w_goals", has: "safety" }] } }
+            ]
+          },
+          {
+            type: "deepdive",
+            title: "Go deeper (advanced)",
+            items: [
+              { q: "Go deeper: Does RO waste water?", a: "Yes, some. Modern systems are more efficient, and the taste + confidence benefits are often worth it." },
+              { q: "Go deeper: Remineralization", a: "Some prefer the taste. It is optional and preference-based." }
+            ]
+          }
         ],
         questions: [
           { key: "w_ro_want", type: "single", title: "Do you want RO for drinking water?", options: [
@@ -163,46 +273,22 @@
             { value: "maybe", label: "Maybe / recommend if it fits" },
             { value: "no", label: "No" }
           ]},
-          { key: "w_ro_style", type: "single", title: "RO taste preference", showIf: { any: [{ q: "w_ro_want", in: ["yes", "maybe"] }] }, options: [
-            { value: "standard", label: "Standard RO (clean taste)" },
-            { value: "remin", label: "RO with remineralization (adds minerals for taste)" },
-            { value: "alkaline", label: "Alkaline/remineralized (strong taste preference)" }
-          ]}
-        ]
-      },
-
-      {
-        id: "w_wholehome",
-        title: "Step 6: Whole-home treatment layering",
-        lead: "We layer treatment in the correct order: sediment (if needed) → carbon (if needed) → softening (if needed).",
-        blocks: [
-          { type: "callout", title: "Whole-home protection focus", body: "Whole-home treatment protects fixtures, water heater, appliances, and your shower experience." },
-          { type: "text", html: "<div><div class='tile' style='margin-top:10px;'><strong>Do I need a softener and a whole-home filter?</strong><p>Often, yes: softeners handle hardness/scale; carbon filters handle chlorine/taste/odor. Sediment filtration is added when particles are present.</p></div><div class='tile' style='margin-top:10px;'><strong>Will a softener fix staining?</strong><p>Sometimes. Iron/manganese staining often needs specific filtration. White scale rings are usually hardness-related.</p></div></div>" },
-          { type: "video", title: "Water softener basics (scale, appliances, shower feel)", caption: "Replace VIDEO_ID.", embedUrl: "https://www.youtube.com/embed/VIDEO_ID" }
-        ],
-        questions: [
-          { key: "w_want_shower", type: "single", title: "Do you want showers to feel better (less dryness/odor)?", options: [
-            { value: "yes", label: "Yes" },
-            { value: "maybe", label: "Maybe" },
-            { value: "no", label: "Not important" }
-          ]},
-          { key: "w_budget", type: "single", title: "Budget approach", options: [
-            { value: "lowest", label: "Start with essentials" },
-            { value: "mid", label: "Best value bundle" },
-            { value: "top", label: "Strongest plan" }
+          { key: "w_priority", type: "single", title: "Priority", help: "Pick the most important outcome.", options: [
+            { value: "health", label: "Health confidence" },
+            { value: "comfort", label: "Comfort and taste" },
+            { value: "protect", label: "Protect plumbing" }
           ]}
         ]
       },
 
       {
         id: "w_review",
-        title: "Review: your water bundle",
-        lead: "This is your recommended water plan with pricing. Add to cart or schedule a confirmation visit.",
+        title: "Review: your water plan",
+        lead: "Education comes first. Here is your recommended plan with pricing.",
         isReview: true,
         blocks: [
-          { type: "callout", title: "Before you add to cart", body: "You can remove any items you don’t want and still keep the rest of the bundle. If any line says Quote, that means we recommend a quick verification step before finalizing." },
-          { type: "video", title: "How to read your recommendation", caption: "Replace VIDEO_ID.", embedUrl: "https://www.youtube.com/embed/VIDEO_ID" },
-          { type: "callout", title: "If anything is unknown", body: "We can confirm hardness, pipe layout, and install access during the in-home visit. The bundle still gives you a strong baseline." }
+          { type: "callout", title: "Before you add to cart", body: "You can remove any items you do not want and still keep the rest of the bundle. If any line says Quote, we recommend a quick verification step before finalizing." },
+          { type: "video", title: "How to read your recommendation", caption: "Replace VIDEO_ID.", embedUrl: "https://www.youtube.com/embed/VIDEO_ID" }
         ],
         questions: [
           { key: "w_notes", type: "textarea", title: "Optional notes", help: "Any known issues (old galvanized pipe, water heater problems, basement plumbing)?" }
@@ -211,20 +297,16 @@
     ],
 
     rules: [
-      // Recommend a baseline test for most people (especially when anything is unknown)
       { when: { any: [{ q: "w_priority", truthy: true }, { q: "w_symptoms", truthy: true }, { q: "w_goals", truthy: true }] }, addProducts: ["water_test"] },
 
-      // Sediment protection
-      { when: { any: [{ q: "w_symptoms", has: "sediment" }, { q: "w_symptoms", has: "cloudy" }, { q: "w_plumbing_age", eq: "old" }] },
+      { when: { any: [{ q: "w_symptoms", has: "sediment" }, { q: "w_symptoms", has: "cloudy" }, { q: "w_home_age", eq: "old" }] },
         addProducts: ["water_sediment"],
         addExplainers: [{ title: "Sediment first", body: "Sediment protection prevents clogs and protects other treatment devices. It is often the lowest-cost high-impact starting point." }]
       },
 
-      // Carbon filtration (taste/odor/shower)
       { when: { any: [
           { q: "w_symptoms", has: "chlorine" },
           { q: "w_symptoms", has: "rottenegg" },
-          { q: "w_want_shower", in: ["yes", "maybe"] },
           { q: "w_goals", has: "odor" },
           { q: "w_goals", has: "taste" }
         ]},
@@ -232,7 +314,6 @@
         addExplainers: [{ title: "Carbon filtration", body: "Whole-home carbon improves shower and laundry experience and reduces chlorine taste/odor." }]
       },
 
-      // Softener (hardness symptoms or goals)
       { when: { any: [
           { q: "w_symptoms", has: "scale" },
           { q: "w_symptoms", has: "spotting" },
@@ -245,7 +326,6 @@
         addExplainers: [{ title: "Soft water benefits", body: "Soft water reduces scale buildup, extends appliance life, improves soap performance, and can make showers feel noticeably better." }]
       },
 
-      // RO (drinking water)
       { when: { any: [
           { q: "w_ro_want", in: ["yes", "maybe"] },
           { q: "w_goals", has: "taste" },
@@ -256,10 +336,12 @@
         addExplainers: [{ title: "RO drinking water", body: "RO is the most noticeable taste upgrade. It also reduces many dissolved contaminants for higher confidence." }]
       },
 
-      // Well water: UV layer when strong confidence selected
-      { when: { all: [{ q: "w_source", eq: "well" }, { q: "w_priority", in: ["balanced", "strong"] }] },
+      { when: { all: [{ q: "w_source", eq: "well" }, { q: "w_priority", in: ["health", "comfort"] }] },
         addProducts: ["water_uv_disinfection"],
         addExplainers: [{ title: "Well disinfection layer", body: "UV can add a confidence layer for microbial concerns when paired with proper pre-filtration." }]
+      },
+      { when: { any: [{ q: "w_maintenance", eq: "low" }] },
+        addExplainers: [{ title: "Low-maintenance plan", body: "We will prioritize fewer cartridges and longer service intervals where possible." }]
       }
     ]
   };

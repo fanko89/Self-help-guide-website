@@ -232,9 +232,148 @@
     const renderBlocks = (blocks)=>{
       if (!blocks || !blocks.length) return '';
       return blocks.map(b=>{
+        if (!evalShowIf(b.showIf, answers)) return '';
         if (b.type === 'callout'){
           const tone = b.tone ? ` ${b.tone}` : '';
           return `<div class="callout${tone}"><strong>${b.title||''}</strong><p>${b.body||''}</p></div>`;
+        }
+        const highlight = b.highlightIf && evalShowIf(b.highlightIf, answers) ? ' is-highlighted' : '';
+        if (b.type === 'explain'){
+          return `<div class="edu-block${highlight}">
+            <h4>${b.title||'Plain-language explanation'}</h4>
+            <p>${b.body||''}</p>
+          </div>`;
+        }
+        if (b.type === 'videoModule'){
+          const thumb = b.thumb || 'assets/img/thumb-generic.png';
+          const href = b.href || '#';
+          return `<div class="video-module">
+            <div class="video-meta">
+              <div class="h3">${b.title||'Video'}</div>
+              <div class="tiny">${b.caption||'Short explainer (30-90 seconds).'}</div>
+              <a class="btn btn-secondary btn-small" href="${href}">Watch video</a>
+            </div>
+            <div class="video-thumb">
+              <img src="${thumb}" alt="${b.alt||'Video placeholder'}">
+            </div>
+          </div>`;
+        }
+        if (b.type === 'visual'){
+          const media = b.media || {};
+          const visual = (media.kind === 'video')
+            ? `<div class="video">
+                <iframe title="${(media.title||b.title||'Video')}" width="100%" height="315" src="${media.embedUrl||'https://www.youtube.com/embed/VIDEO_ID'}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <div class="cap"><strong>${media.title||b.title||'Video'}</strong> <span class="tiny">- ${media.caption||'Replace VIDEO_ID with your video.'}</span></div>
+              </div>`
+            : `<div class="edu-visual"><img src="${media.src||''}" alt="${media.alt||''}"></div>`;
+          return `<div class="edu-block${highlight}">
+            <h4>${b.title||'Visual explanation'}</h4>
+            <p>${b.body||''}</p>
+            ${visual}
+            ${b.caption ? `<div class="caption">${b.caption}</div>`:''}
+          </div>`;
+        }
+        if (b.type === 'evidence'){
+          const items = (b.items||[]).filter(it=>evalShowIf(it.showIf, answers)).map(it=>`
+            <div class="evidence-item">
+              <div style="font-weight:900;">${it.title||''}</div>
+              <div class="tiny">${it.summary||''}</div>
+              ${it.url ? `<div class="tiny" style="margin-top:6px;"><a href="${it.url}" target="_blank" rel="noopener">${it.org||'Source'}</a></div>`:''}
+            </div>
+          `).join('');
+          const chart = b.chart ? `
+            <div class="chart">
+              <div style="font-weight:900;">${b.chart.title||'Chart'}</div>
+              ${(b.chart.rows||[]).filter(r=>evalShowIf(r.showIf, answers)).map(r=>`
+                <div class="chart-bar">
+                  <div class="label">${r.label||''}</div>
+                  <div class="bar" style="width:${Math.min(100, Math.max(8, Number(r.value)||0))}%;"></div>
+                </div>
+              `).join('')}
+              ${b.chart.caption ? `<div class="caption">${b.chart.caption}</div>`:''}
+            </div>
+          ` : '';
+          return `<div class="edu-block${highlight}">
+            <h4>${b.title||'Evidence-based data'}</h4>
+            <p>${b.body||''}</p>
+            <div class="evidence-list">${items}</div>
+            ${chart}
+          </div>`;
+        }
+        if (b.type === 'chart'){
+          const rows = (b.rows||[]).filter(r=>evalShowIf(r.showIf, answers)).map(r=>`
+            <div class="chart-bar">
+              <div class="label">${r.label||''}</div>
+              <div class="bar" style="width:${Math.min(100, Math.max(8, Number(r.value)||0))}%;"></div>
+            </div>
+          `).join('');
+          return `<div class="edu-block${highlight}">
+            <h4>${b.title||'Visual / Chart'}</h4>
+            <p>${b.body||''}</p>
+            <div class="chart">
+              <div style="font-weight:900;">${b.chartTitle||'Chart placeholder'}</div>
+              ${rows}
+              ${b.caption ? `<div class="caption">${b.caption}</div>`:''}
+            </div>
+          </div>`;
+        }
+        if (b.type === 'evidenceAccordion'){
+          const items = (b.items||[]).filter(it=>evalShowIf(it.showIf, answers)).map(it=>`
+            <li><a href="${it.url||'#'}" target="_blank" rel="noopener">${it.label||it.title||'Source'}</a></li>
+          `).join('');
+          return `<div class="edu-block${highlight}">
+            <h4>${b.title||'Evidence & Sources'}</h4>
+            <div class="accordion">
+              <details>
+                <summary>${b.summary||'Open sources'}</summary>
+                <div class="body">
+                  <ul class="bullets">${items}</ul>
+                </div>
+              </details>
+            </div>
+          </div>`;
+        }
+        if (b.type === 'implications'){
+          const scenarios = (b.scenarios||[]).filter(s=>evalShowIf(s.showIf, answers)).map(s=>`
+            <div class="scenario">
+              <strong>${s.title||''}</strong>
+              <p>${s.body||''}</p>
+            </div>
+          `).join('');
+          return `<div class="edu-block${highlight}">
+            <h4>${b.title||'What this means for your home'}</h4>
+            <p>${b.body||''}</p>
+            ${scenarios}
+          </div>`;
+        }
+        if (b.type === 'products'){
+          const items = (b.items||[]).filter(it=>evalShowIf(it.showIf, answers)).map(it=>`
+            <div class="product-implication">
+              <strong>${it.title||''}</strong>
+              <div class="tiny">Solves: ${it.solves||''}</div>
+              <div class="tiny bad">Does not solve: ${it.not||''}</div>
+              <div class="tiny" style="margin-top:6px;">Right for: ${it.for||''}</div>
+              <div class="tiny">Not right for: ${it.notFor||''}</div>
+              ${it.link ? `<div style="margin-top:8px;"><a class="btn btn-ghost btn-small" href="${it.link}">View in shop</a></div>`:''}
+            </div>
+          `).join('');
+          return `<div class="edu-block${highlight}">
+            <h4>${b.title||'Product implications'}</h4>
+            <p>${b.body||''}</p>
+            <div class="product-implications">${items}</div>
+          </div>`;
+        }
+        if (b.type === 'deepdive'){
+          const inner = (b.items||[]).map(it=>`
+            <details>
+              <summary class="go-deeper">${it.q||'Go deeper'}</summary>
+              <div class="body">${it.a||''}</div>
+            </details>
+          `).join('');
+          return `<div class="edu-block${highlight}">
+            <h4>${b.title||'Optional advanced deep dive'}</h4>
+            <div class="accordion">${inner}</div>
+          </div>`;
         }
         if (b.type === 'text'){
           return `<div class="muted" style="font-size:14px;">${b.html||''}</div>`;
@@ -439,12 +578,12 @@
     const qty = Number(l.qty||1);
     const qtyHtml = (qty && qty>1) ? `<span class="badge">x${qty}</span>` : '';
     const metaHtml = l.quoteOnly
-      ? `<div class="tiny"><span class="badge">Quote</span> ${qtyHtml} We’ll verify sizing/install details for this item.</div>`
+      ? `<div class="tiny"><span class="badge">Quote</span> ${qtyHtml} We'll verify sizing/install details for this item.</div>`
       : (l.short ? `<div class="tiny">${qtyHtml} ${l.short}</div>` : (excluded ? `<div class="tiny"><span class="badge">Removed</span> Not included in total.</div>` : ''));
     const toggleHtml = (showToggle && !l.quoteOnly)
       ? `<button type="button" class="chip" data-toggle-item="${l.id}">${excluded ? 'Add back' : 'Remove'}</button>`
       : '';
-    const priceHtml = l.quoteOnly ? '—' : money(l.price);
+    const priceHtml = l.quoteOnly ? '-' : money(l.price);
     return `
       <div class="line ${excluded ? 'excluded' : ''}">
         ${imgHtml}
@@ -482,6 +621,7 @@
 
       // Only show the recommended bundle at the end of the guide (review step)
       const showBundle = !!step?.isReview;
+      const showLearnAsYouGo = !!step?.isReview;
 
       const bundleCardHtml = showBundle ? `
         <div class="card pad">
@@ -499,12 +639,12 @@
       ` : '';
 
       mountEl.innerHTML = `
-        <div class="wizard">
+        <div class="wizard ${showLearnAsYouGo || showBundle ? '' : 'wizard-single'}">
           <div>
             <div class="card pad-lg">
               <div class="wizard-top">
                 <div>
-                  <div class="eyebrow">${flow.badge || 'Self-help guide'} · <span class="tiny">${flow.subtitle||''}</span></div>
+                  <div class="eyebrow">${flow.badge || 'Self-help guide'} - <span class="tiny">${flow.subtitle||''}</span></div>
                   <div class="h2" style="margin-top:10px;">${stepTitle}</div>
                   ${stepLead ? `<div class="lead">${stepLead}</div>` : ''}
                 </div>
@@ -526,13 +666,15 @@
             ${showBundle ? bundleCardHtml : ''}
             ${showBundle ? '<div style="height:14px;"></div>' : ''}
 
-            <div class="card pad">
-              <div class="h3">Learn as you go</div>
-              <div class="tiny">Short explanations tied to your answers.</div>
-              <div style="margin-top:12px; display:grid; gap:10px;">
-                ${explainerHtml}
+            ${showLearnAsYouGo ? `
+              <div class="card pad">
+                <div class="h3">Learn as you go</div>
+                <div class="tiny">Short explanations tied to your answers.</div>
+                <div style="margin-top:12px; display:grid; gap:10px;">
+                  ${explainerHtml}
+                </div>
               </div>
-            </div>
+            ` : ''}
           </aside>
         </div>
       `;
@@ -541,8 +683,16 @@
       const prev = $('[data-prev]', mountEl);
       const next = $('[data-next]', mountEl);
       const reset = $('[data-reset]', mountEl);
-      prev && prev.addEventListener('click', ()=>{ stepIndex--; rerender(); });
-      next && next.addEventListener('click', ()=>{ stepIndex++; rerender(); });
+      prev && prev.addEventListener('click', ()=>{
+        stepIndex--;
+        rerender();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+      next && next.addEventListener('click', ()=>{
+        stepIndex++;
+        rerender();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
       reset && reset.addEventListener('click', ()=>{
         answers = {};
         stepIndex = 0;
